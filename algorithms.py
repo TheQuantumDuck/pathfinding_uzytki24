@@ -19,7 +19,7 @@ class A_star():
     def __call__(self, startNode: int, endNode: int) -> List[Tuple[int, float]]:
         came_from = {}
         g_score, f_score = defaultdict(lambda: float("inf")), defaultdict(lambda: float("inf"))
-        g_score[startNode], f_score[startNode] = 0.0, self.heurestic(startNode, startNode, self.data)
+        g_score[startNode], f_score[startNode] = 0.0, self.heurestic(startNode, endNone, self.data)
         open_set = [(f_score[startNode], startNode)]
         open_set_nodes = set((startNode,))
         while bool(open_set):
@@ -37,7 +37,7 @@ class A_star():
                 if tentative_g_score < g_score[neighbour]:
                     came_from[neighbour] = current
                     g_score[neighbour] = tentative_g_score
-                    neighbour_f_score = tentative_g_score + self.heurestic(startNode, neighbour, self.data)
+                    neighbour_f_score = tentative_g_score + self.heurestic(neighbour, endNone, self.data)
                     f_score[neighbour] = neighbour_f_score
                     if neighbour not in open_set_nodes:
                         bisect.insort(open_set, (neighbour_f_score, neighbour))
