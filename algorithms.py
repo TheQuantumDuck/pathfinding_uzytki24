@@ -26,10 +26,13 @@ class A_star():
             current = open_set[0][1]
             if current == endNode:
                 path = [current]
+                delay = 0.0
                 while current != startNode:
-                    current = came_from[current]
-                    path.insert(0, current)
-                return path
+                    new = came_from[current]
+                    path.insert(0, new)
+                    delay += self.get_neighbours(current, self.data)[new]
+                    current = new
+                return {"path": path, "delay": delay}
             open_set = open_set[1:]
             open_set_nodes.remove(current)
             for neighbour, dist in self.get_neighbours(current, self.data).items():
